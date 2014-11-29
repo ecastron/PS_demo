@@ -66,5 +66,5 @@ But if you already have Bowtie2 indices (our case), you can issue the following 
 
 Let's give it a try...
 
-
+![map](https://github.com/ecastron/PS_demo/raw/master/pathomap.png)
 
