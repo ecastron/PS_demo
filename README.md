@@ -33,11 +33,11 @@ We are going to use data from a study exploring microbiome diversity in orophari
 
 This file is probably too big for a demo so I randomly subsampled the reads down to a more manageable size (~40 M to 40 K reads)  
 - Go ahead and download the data [here](https://raw.githubusercontent.com/ecastron/PS_demo/master/ES_211.fastq)
-- Now you need at least two files, one as target library (where your reads are going to be mapped) and as filter library (internal controls, host genome, contaminants, etc. that you want to remove)
+- Now you need at least two files, one to be used as target library (where your reads are going to be mapped) and another one to be used as filter library (internal controls, host genome, contaminants, etc. that you want to remove)
 
-As target library, you can use any multi fasta file containing full or draft genomes, or even nucleotide entries from NCBI. The only condition is that the fasta entries start with the taxonomy ID from NCBI as follows:
+As target library, you can use any multi fasta file containing full or draft genomes, or even nucleotide entries from NCBI, and combinations of both. The only condition is that the fasta entries start with the taxonomy ID from NCBI as follows:
 
-From:  \>gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  To:  \>**ti|44088|**gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  
+Originally:  \>gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  but **PathoScope** likes:  \>**ti|44088|**gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  
 
 You could do this very easily in **PathoLib**:
 
@@ -51,10 +51,10 @@ Or in order to create a filter library, say all human sequences:
 		
 		python  pathoscope.py -LIB python pathoscope.py LIB -genomeFile nt_ti.fa -taxonIds 9606 --subTax -outPrefix human
 
-However, I'm providing a target and filter library already formatted that you can download [here](https://www.dropbox.com/sh/3kjvec5lizwmo9l/AAAQmHEAwAfDixGtKC6eTeN1a?dl=0) and [here](). The target library is a collection of genomes from the reference library of the Human Microbiome Project (description [here](http://hmpdacc.org/HMREFG/)), and the filter library is simply the human genome (hg19). We are also going to use another filter library (phix174) to get rid of all the reads mapping to the Illumina internal control sequence that is sometimes added to sequencing experiments.
+However, I'm providing a target and filter library already formatted that you can download [here](https://www.dropbox.com/sh/3kjvec5lizwmo9l/AAAQmHEAwAfDixGtKC6eTeN1a?dl=0) and [here](). The target library is a collection of genomes from the reference library of the Human Microbiome Project (description [here](http://hmpdacc.org/HMREFG/)), and the filter library is simply the human genome (hg19). We are also going to use another filter library as well (phix174) to get rid of all the reads mapping to the Illumina internal control sequence that is sometimes added to sequencing experiments.
 
 ### Let's map the reads
-Once you have your data and target and filter libraries, we are ready to go ahead with the mapping step. For this we use bowtie2 so we will need to tell **PathoMap** where the bowtie2 indices are. If you don't have bowtie2 indices, not a problem, **PathoMap** will create them for you. And if your fasta files are larger than 4.6 GB, not a problem either, **PathoMap** will split your fasta files and create indices for each one of the resulting files.
+Once you have your data and target and filter libraries, we are ready to go ahead with the mapping step. For this we use bowtie2 so we will need to tell **PathoMap** where the bowtie2 indices are. If you don't have bowtie2 indices, not a problem, **PathoMap** will create them for you. And if your fasta files are larger than 4.6 GB (Bowtie2 limit), not a problem either, **PathoMap** will split your fasta files and create indices for each one of the resulting files.
 
 If you have fasta files and not bowtie2 indices:
 
