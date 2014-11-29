@@ -1,7 +1,7 @@
 # PathoScope Demo for DAV
 -------------------------
 
-![banner](https://raw.githubusercontent.com/ecastron/PS_demo/master/banner.png)
+![banner](https://raw.githubusercontent.com/ecastron/PS_demo/master/img/banner.png)
 
 ##### In this demo we will explore how to get a taxonomic profile from a metagenomic experiment using PathoScope 2.0. A more in-depth tutorial can be found in the **PathoScope** repo [here](https://github.com/PathoScope/PathoScope/raw/master/pathoscope2.0_v0.02_tutorial.pdf)
 
@@ -29,7 +29,7 @@ And PS_demo
 ### Get data and get reference genomes
 We are going to use data from a study exploring microbiome diversity in oropharingeal swabs from schizophrenia patients and healthy controls. The SRA accession number is `SRR1519057`. 
 
-![SRA](https://github.com/ecastron/PS_demo/raw/master/img01.png)
+![SRA](https://github.com/ecastron/PS_demo/raw/master/img/img01.png)
 
 This file is probably too big for a demo so I randomly subsampled the reads down to a more manageable size (~40 M to 40 K reads)  
 - Go ahead and download the data [here](https://raw.githubusercontent.com/ecastron/PS_demo/master/ES_211.fastq)
@@ -66,7 +66,7 @@ But if you already have Bowtie2 indices (our case), you can issue the following 
 
 Let's give it a try...
 
-![map](https://github.com/ecastron/PS_demo/raw/master/pathomap.png)
+![map](https://github.com/ecastron/PS_demo/raw/master/img/pathomap.png)
 
 So that should have taken ~3 minutes to run. Now you have a number of things that were printed to the screen as well as files that were created. The summary of the STDOUT is:
 
@@ -79,7 +79,7 @@ So that should have taken ~3 minutes to run. Now you have a number of things tha
 
 And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (DAV\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (DAV\_demo-appendAlign.fq), and the file you most care about: ES_211.sam
 
-![mapout](https://github.com/ecastron/PS_demo/raw/master/mapout.png)
+![mapout](https://github.com/ecastron/PS_demo/raw/master/img/mapout.png)
 
 ### Let's get a taxonomic profile from our .sam file
 The last step in our demo is to obtain a taxonomic profile from ES_211.sam using the read reassignment model implemented in **PathoID**
