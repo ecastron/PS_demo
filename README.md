@@ -37,7 +37,7 @@ This file is probably too big for a demo so I randomly subsampled the reads down
 
 As target library, you can use any multi fasta file containing full or draft genomes, or even nucleotide entries from NCBI, and combinations of both. The only condition is that the fasta entries start with the taxonomy ID from NCBI as follows:
 
-Originally:  \>gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  but PathoScope likes:  \>**ti|44088|**gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  
+Originally:  \>gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  but PathoScope likes:  \>*ti|44088|*gi|40555938|ref|NC_005309.1| Canarypox virus, complete genome  
 
 You could do this very easily in **PathoLib**:
 
@@ -51,18 +51,18 @@ Or in order to create a filter library, say all human sequences:
 		
 		python  pathoscope.py -LIB python pathoscope.py LIB -genomeFile nt_ti.fa -taxonIds 9606 --subTax -outPrefix human
 
-However, I'm providing a target and filter library already formatted that you can download [here](https://www.dropbox.com/sh/3kjvec5lizwmo9l/AAAQmHEAwAfDixGtKC6eTeN1a?dl=0) and [here](). The target library is a collection of genomes from the reference library of the Human Microbiome Project (description [here](http://hmpdacc.org/HMREFG/)), and the filter library is simply the human genome (hg19). We are also going to use another filter library as well (phix174) to get rid of all the reads mapping to the Illumina internal control sequence that is sometimes added to sequencing experiments.
+However, I'm providing a target and filter library already formatted that you can download [here](https://www.dropbox.com/sh/3kjvec5lizwmo9l/AAAQmHEAwAfDixGtKC6eTeN1a?dl=0) and [here](https://www.dropbox.com/sh/2gzurlubxkzku0p/AADEIiGDig00FhNpu6XZ2iYaa?dl=0). The target library is a collection of genomes from the reference library of the Human Microbiome Project (description [here](http://hmpdacc.org/HMREFG/)), and the filter library is simply the human genome (hg19). We are also going to use another filter library as well ([phix174](https://www.dropbox.com/sh/9mt2a2v2xdqpj6x/AABgKTPNfwPNO7DpKjo56gdpa?dl=0)) to get rid of all the reads mapping to the Illumina internal control sequence that is sometimes added to sequencing experiments.
 
 ### Let's map the reads
 Once you have your data and target and filter libraries, we are ready to go ahead with the mapping step. For this we use bowtie2 so we will need to tell **PathoMap** where the bowtie2 indices are. If you don't have bowtie2 indices, not a problem, **PathoMap** will create them for you. And if your fasta files are larger than 4.6 GB (Bowtie2 limit), not a problem either, **PathoMap** will split your fasta files and create indices for each one of the resulting files.
 
 If you have fasta files and not bowtie2 indices:
 
-		python pathoscope.py -MAP -U ES_211.fastq -targetRefFiles HMP_ref_ti_0.fa,HMP_ref_ti_1.fa -filterRefFiles human.fa,phix174.fa  -outDir . -outAlign ES_211.sam  -expTag DAV_demo
+		python pathoscope.py MAP -U ES_211.fastq -targetRefFiles HMP_ref_ti_0.fa,HMP_ref_ti_1.fa -filterRefFiles human.fa,phix174.fa  -outDir . -outAlign ES_211.sam  -expTag DAV_demo
 
 But if you already have Bowtie2 indices (our case), you can issue the following command:
 
-		python pathoscope.py -MAP -U ES_211.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign ES_211.sam  -expTag DAV_demo
+		python pathoscope.py MAP -U ES_211.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign ES_211.sam  -expTag DAV_demo
 
 Let's give it a try...
 
