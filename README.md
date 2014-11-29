@@ -68,3 +68,15 @@ Let's give it a try...
 
 ![map](https://github.com/ecastron/PS_demo/raw/master/pathomap.png)
 
+So that should have taken ~3 minutes to run. Now you have a number of things that were printed to the screen as well as files that were created. The summary of the STDOUT is:
+
+| Reads Mapped  | Library  | 
+|:------------- | ---------------:|
+| 1053      | HMP\_ref\_ti\_0 |
+| 1132      | HMP\_ref\_ti\_0 |
+| 916 | genome |
+| 0 | phix174 |
+
+And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (DAV\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (DAV\_demo-appendAlign.fq), and the file you most care about: ES_211.sam
+
+![mapout](https://github.com/ecastron/PS_demo/raw/master/mapout.png)
