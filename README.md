@@ -24,7 +24,7 @@ PathoScope is now hosted in GitHub so you can easily get it by issuing the follo
 
 And PS_demo
 
-		https://github.com/ecastron/PS_demo.git
+		git clone https://github.com/ecastron/PS_demo.git
 
 ### Get data and get reference genomes
 We are going to use data from a study exploring microbiome diversity in oropharingeal swabs from schizophrenia patients and healthy controls. The SRA accession number is `SRR1519057`. 
