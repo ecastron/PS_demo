@@ -86,7 +86,8 @@ The last step in our demo is to obtain a taxonomic profile from ES_211.sam using
 
 		python pathoscope.py ID -alignFile ES_211.sam -fileType sam -outDir . -expTag DAV -thetaPrior 1000000
 
-After running the command line above, you should get a tab-delimited file with **PathoScope's** output, and an updated .sam file representing an alignment after **PathoScope's** reassignment model was applied.
+After running the command line above, you should get a tab-delimited file with **PathoScope's** output, and an updated .sam file representing an alignment after **PathoScope's** reassignment model was applied.  
+If you want to see all the output files you should get, check out the *output_files* directory in the PS\_demo repo.
 
 ### Output TSV file format
 
