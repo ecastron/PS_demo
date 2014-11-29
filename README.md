@@ -1,9 +1,9 @@
 # PathoScope Demo for DAV
 -------------------------
 
+![banner](https://raw.githubusercontent.com/ecastron/PS_demo/master/banner.png)
 
-
-In this demo we will explore how to get a taxonomic profile from a metagenomic experiment using PathoScope 2.0. a more in-depth tutorial can be found in the **PathoScope** repo [here](https://github.com/PathoScope/PathoScope/raw/master/pathoscope2.0_v0.02_tutorial.pdf)
+#### In this demo we will explore how to get a taxonomic profile from a metagenomic experiment using PathoScope 2.0. A more in-depth tutorial can be found in the **PathoScope** repo [here](https://github.com/PathoScope/PathoScope/raw/master/pathoscope2.0_v0.02_tutorial.pdf)
 
 ### What PathoScope can do for you
 **PathoScope** is a modular piece of software that will allow you to go all the way from a fastq file to a text file (typically tab-delimited) with columns representing genomes, their proportions, etc.  
