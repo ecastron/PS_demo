@@ -80,3 +80,11 @@ So that should have taken ~3 minutes to run. Now you have a number of things tha
 And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (DAV\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (DAV\_demo-appendAlign.fq), and the file you most care about: ES_211.sam
 
 ![mapout](https://github.com/ecastron/PS_demo/raw/master/mapout.png)
+
+### Let's get a taxonomic profile from our .sam file
+The last step in our demo is to obtain a taxonomic profile from ES_211.sam using the read reassignment model implemented in **PathoID**
+
+		python pathoscope.py ID -alignFile ES_211.sam -fileType sam -outDir . -expTag DAV -thetaPrior 1000000
+
+After running the command line above, you should get a tab-delimited file with **PathoScope's** output, and an updated .sam file representing an alignment after **PathoScope's** reassignment model was applied.
+
