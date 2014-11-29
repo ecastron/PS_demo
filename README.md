@@ -1,6 +1,8 @@
 # PathoScope Demo for DAV
 -------------------------
 
+
+
 In this demo we will explore how to get a taxonomic profile from a metagenomic experiment using PathoScope 2.0. a more in-depth tutorial can be found in the **PathoScope** repo [here](https://github.com/PathoScope/PathoScope/raw/master/pathoscope2.0_v0.02_tutorial.pdf)
 
 ### What PathoScope can do for you
@@ -15,10 +17,14 @@ Once you run your samples through **PathoScope**, you can easily import the outp
 ### PathoScope Dependencies
 The only dependencies for **PathoScope** are [*Bowtie2*](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) and [python](https://www.python.org) *2.7.3* or higher. Make sure that both are in your PATH by issuing something like `echo $PATH`
 
-### Installing PathoScope
+### Installing PathoScope and PS_demo
 PathoScope is now hosted in GitHub so you can easily get it by issuing the following command from the Terminal  
 
 		git clone https://github.com/PathoScope/PathoScope.git
+
+And PS_demo
+
+		https://github.com/ecastron/PS_demo.git
 
 ### Get data and get reference genomes
 We are going to use data from a study exploring microbiome diversity in oropharingeal swabs from schizophrenia patients and healthy controls. The SRA accession number is `SRR1519057`. 
@@ -45,4 +51,20 @@ Or in order to create a filter library, say all human sequences:
 		
 		python  pathoscope.py -LIB python pathoscope.py LIB -genomeFile nt_ti.fa -taxonIds 9606 --subTax -outPrefix human
 
-However, I'm providing a target and filter library already formatted that you can download here and here. The target library is a collection of genomes from the reference library of the Human Microbiome Project (description here), and the filter library is simply the human genome (hg19). We are also going to use another filter library (phix174) to get rid of all the reads mapping to the Illumina internal control sequence that is sometimes added to sequencing experiments.
+However, I'm providing a target and filter library already formatted that you can download [here](https://www.dropbox.com/sh/3kjvec5lizwmo9l/AAAQmHEAwAfDixGtKC6eTeN1a?dl=0) and [here](). The target library is a collection of genomes from the reference library of the Human Microbiome Project (description [here](http://hmpdacc.org/HMREFG/)), and the filter library is simply the human genome (hg19). We are also going to use another filter library (phix174) to get rid of all the reads mapping to the Illumina internal control sequence that is sometimes added to sequencing experiments.
+
+### Let's map the reads
+Once you have your data and target and filter libraries, we are ready to go ahead with the mapping step. For this we use bowtie2 so we will need to tell **PathoMap** where the bowtie2 indices are. If you don't have bowtie2 indices, not a problem, **PathoMap** will create them for you. And if your fasta files are larger than 4.6 GB, not a problem either, **PathoMap** will split your fasta files and create indices for each one of the resulting files.
+
+If you have fasta files and not bowtie2 indices:
+
+		python pathoscope.py -MAP -U ES_211.fastq -targetRefFiles HMP_ref_ti_0.fa,HMP_ref_ti_1.fa -filterRefFiles human.fa,phix174.fa  -outDir . -outAlign ES_211.sam  -expTag DAV_demo
+
+But if you already have Bowtie2 indices (our case), you can issue the following command:
+
+		python pathoscope.py -MAP -U ES_211.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign ES_211.sam  -expTag DAV_demo
+
+Let's give it a try...
+
+
+
