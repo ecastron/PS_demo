@@ -5,7 +5,8 @@
 ### Let's combine multiple PathoScope tsv files into a contingency table
 
 We need to create a table where rows are genomes and columns are samples. In the previous demo we analyzed a downsampled version of sample ES_211. The original dataset consisted of 16 cases (patients with schisophrenia) and 16 healthy controls.  
-I've already analyzed these data and I'm providing all tsv files. If you want to give it a try, you can always download the original data which was deposited in NCBI under BioProject [PRJNA255439] (http://www.ncbi.nlm.nih.gov/sra/?term=PRJNA255439).  
+
+I've already analyzed these data and I'm providing all tsv files (rather the top 50 hits from each file). If you want to give it a try, you can always download the original data which was deposited in NCBI under BioProject [PRJNA255439] (http://www.ncbi.nlm.nih.gov/sra/?term=PRJNA255439).  
 The following code is from an R script that I use but that it's not as tidy and neat as I'd like to.
 
 Let's load the required libraries and set our working directory
@@ -99,19 +100,20 @@ Since we are in a limited time setting, we are going to load three data frames, 
 Let's load some libraries and create a phyloseq object:  
 
 ```{r}
+source("http://bioconductor.org/biocLite.R")
+biocLite("phyloseq")
 library(phyloseq)
-library(ggplot2)
 
 # we need to create a phyloseq object manually. See tutorial 
 # http://joey711.github.io/phyloseq/import-data#manual
 
 # read in data
-
+setwd("~/PS_demo/data")
 read.csv("otu_table.csv", header=TRUE, row.names=1) ->otu_table
 read.csv("taxmat.csv", header=TRUE, row.names=1) ->taxmat
-read.table('metadata.tsv', header=TRUE, sep='\t', row.names=1) -> metadata
+read.table('metadata.txt', header=TRUE, sep='\t', row.names=1) -> metadata
 
-as.matrix(otu_table)->otu_table
+as.matrix(otu_table)->otumat
 as.matrix(taxmat)->taxmat
 
 rownames(otumat) <- paste0("OTU", 1:nrow(otumat))
@@ -132,9 +134,10 @@ Now that we have a phyloseq object, we can easily create plots using the functio
 Let's start with some alpha diversity measures
 
 ```{r}
+library("ggplot2")
 plot_bar(physeq, fill = "Superkingdom")
-plot_heatmap(asthma, taxa.label = "Superkingdom")
-plot_richness(asthma, x = "state", color = "state",measures=c("Observed","Chao1", "Fisher","ACE", "Shannon", "Simpson", "InvSimpson")) + geom_boxplot()
+plot_heatmap(physeq, taxa.label = "Superkingdom")
+plot_richness(physeq, x = "state", color = "state",measures=c("Observed","Chao1", "Fisher","ACE", "Shannon", "Simpson", "InvSimpson")) + geom_boxplot()
 ```
 
 ![alpha](https://raw.githubusercontent.com/ecastron/PS_demo/master/img/alpha.png)
@@ -145,7 +148,6 @@ We can also test for whether microbial composition in cases and controls is sign
 # Load required libraries
 
 library("DESeq2")
-library("ggplot2")
 
 # relevel data so that results are expressed in comparison to "control" samples
 
