@@ -120,4 +120,4 @@ This represent the percentage of reads that are mapped to the genome in Column 1
 
 ### Ready for the next demo?
 
-Let's see an example analysis on data generated in **PathoScope** [here](https://raw.githubusercontent.com/ecastron/PS_demo/master/demo02.md)
+Let's see an example analysis on data generated in **PathoScope** [here](https://github.com/ecastron/PS_demo/blob/master/demo02.md)
