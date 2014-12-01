@@ -91,3 +91,108 @@ otu_table_noZeroes<-otu_table[apply(otu_table[,-1], 1, function(x) !all(x==0)),]
 
 write.csv(otu_table_noZeroes,"otu_table.csv")
 ```
+
+### Now let's jump ahead and create some fun plots and charts to explore our data
+
+Since we are in a limited time setting, we are going to load three data frames, i.e., read counts from above, a taxonomy table, and metadata associated with the patients).  
+
+Let's load some libraries and create a phyloseq object:  
+
+```{r}
+library(phyloseq)
+library(ggplot2)
+
+# we need to create a phyloseq object manually. See tutorial 
+# http://joey711.github.io/phyloseq/import-data#manual
+
+# read in data
+
+read.csv("otu_table.csv", header=TRUE, row.names=1) ->otu_table
+read.csv("taxmat.csv", header=TRUE, row.names=1) ->taxmat
+read.table('metadata.tsv', header=TRUE, sep='\t', row.names=1) -> metadata
+
+as.matrix(otu_table)->otu_table
+as.matrix(taxmat)->taxmat
+
+rownames(otumat) <- paste0("OTU", 1:nrow(otumat))
+rownames(taxmat) <- rownames(otumat)
+OTU = otu_table(otumat, taxa_are_rows = TRUE)
+TAX = tax_table(taxmat)
+
+# create a phyloseq object with the three dataframes
+
+physeq = phyloseq(OTU, TAX)
+sampledata = sample_data(metadata)
+physeq = merge_phyloseq(physeq, sampledata)
+
+```
+
+Now that we have a phyloseq object, we can easily create plots using the functions provided in the PhyloSeq Bioconductor package ([here](http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0061217) and [here](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1003531)).
+
+Let's start with some alpha diversity measures
+
+```{r}
+plot_bar(physeq, fill = "Superkingdom")
+plot_heatmap(asthma, taxa.label = "Superkingdom")
+plot_richness(asthma, x = "state", color = "state",measures=c("Observed","Chao1", "Fisher","ACE", "Shannon", "Simpson", "InvSimpson")) + geom_boxplot()
+```
+
+![alpha]()
+
+We can also test for whether microbial composition in cases and controls is significantly different.
+
+```{r}
+# Load required libraries
+
+library("DESeq2")
+library("ggplot2")
+
+# relevel data so that results are expressed in comparison to "control" samples
+
+sample_data(physeq)$state <- relevel(sample_data(physeq)$state, "control")
+
+# convert phyloseq object to deseq object, accounting for cigarrette smoking...
+
+diagdds = phyloseq_to_deseq2(physeq, ~ cigsmoker + state)
+
+# ...and perform a test to find out if cases and controls are different
+
+diagdds = DESeq(diagdds,test="Wald", fitType = "local")
+
+# now subset results to show only significant results
+
+res = results(diagdds, cooksCutoff = FALSE)
+res = res[order(res$padj, na.last = NA), ]
+alpha = 0.001
+sigtab = res[(res$padj < alpha), ]
+sigtab = cbind(as(sigtab, "data.frame"), as(tax_table(physeq)[rownames(sigtab), ], "matrix"))
+
+# and here we look only at taxa that has a positive fold change in comparison to controls
+
+posigtab = sigtab[sigtab[, "log2FoldChange"] > 0, ]
+posigtab = posigtab[, c("baseMean", "log2FoldChange", "lfcSE", "padj", "Phylum", "Class", "Family", "Genus","Species")]
+
+# we can always create a plot to visualize the results
+
+theme_set(theme_bw())
+scale_fill_discrete <- function(palname = "Set1", ...) {
+  scale_fill_brewer(palette = palname, ...)
+}
+sigtabgen = subset(sigtab, !is.na(Genus))
+# Phylum order
+x = tapply(sigtabgen$log2FoldChange, sigtabgen$Phylum, function(x) max(x))
+x = sort(x, TRUE)
+sigtabgen$Phylum = factor(as.character(sigtabgen$Phylum), levels = names(x))
+# Genus order
+x = tapply(sigtabgen$log2FoldChange, sigtabgen$Genus, function(x) max(x))
+x = sort(x, TRUE)
+sigtabgen$Genus = factor(as.character(sigtabgen$Genus), levels = names(x))
+ggplot(sigtabgen, aes(x = Genus, y = log2FoldChange, color = Phylum)) + geom_point(size = 6) + 
+  theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust = 0.5))
+
+```
+![fold]()
+
+PhyloSeq and DESeq packages allow for all sorts of statistical comparisons and visualization options. I encourage people interested in metagenomic analysis to check out Bioconductor pages for these packages for further information.
+
+That concludes our demo/tutorial. If you have further questions don't hesitate to contact me  at <castronallar@gmail.com> or in [GitHub](https://github.com/PathoScope/PathoScope) or [Google Groups] (https://groups.google.com/forum/#!forum/pathoscope). Thanks!
