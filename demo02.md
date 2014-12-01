@@ -137,7 +137,7 @@ plot_heatmap(asthma, taxa.label = "Superkingdom")
 plot_richness(asthma, x = "state", color = "state",measures=c("Observed","Chao1", "Fisher","ACE", "Shannon", "Simpson", "InvSimpson")) + geom_boxplot()
 ```
 
-![alpha]()
+![alpha](https://raw.githubusercontent.com/ecastron/PS_demo/master/img/alpha.png)
 
 We can also test for whether microbial composition in cases and controls is significantly different.
 
@@ -191,7 +191,7 @@ ggplot(sigtabgen, aes(x = Genus, y = log2FoldChange, color = Phylum)) + geom_poi
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust = 0.5))
 
 ```
-![fold]()
+![fold](https://raw.githubusercontent.com/ecastron/PS_demo/master/img/fold.png)
 
 PhyloSeq and DESeq packages allow for all sorts of statistical comparisons and visualization options. I encourage people interested in metagenomic analysis to check out Bioconductor pages for these packages for further information.
 
