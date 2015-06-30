@@ -60,7 +60,7 @@ If you have fasta files and not bowtie2 indices:
 
 But if you already have Bowtie2 indices (our case), you can issue the following command:
 
-		python pathoscope2.py MAP -U 009sub.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign 009sub.sam  -expTag PP_demo
+		python pathoscope2.py MAP -U 009sub.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes phix174  -outDir . -outAlign 009sub.sam  -expTag PP_demo
 
 Let's give it a try...
 
@@ -74,17 +74,17 @@ So that should have taken ~3 minutes to run. Now you have a number of things tha
 | 315 | genome |
 | 0 | phix174 |
 
-And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (\_demo-appendAlign.fq), and the file you most care about: 009sub.sam
+And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (PP\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (PP\_demo-appendAlign.fq), and the file you most care about: 009sub.sam
 
-![mapout](https://github.com/ecastron/PS_demo/raw/master/img/mapout.png)
+![mapout](https://github.com/ecastron/PS_demo/raw/master/img/pp_DEMO_map_output.png)
 
 ### Let's get a taxonomic profile from our .sam file
-The last step in our demo is to obtain a taxonomic profile from ES_211.sam using the read reassignment model implemented in **PathoID**
+The last step in our demo is to obtain a taxonomic profile from 009sub.sam using the read reassignment model implemented in **PathoID**
 
-		python pathoscope.py ID -alignFile ES_211.sam -fileType sam -outDir . -expTag DAV -thetaPrior 1000000
+		python pathoscope2.py ID -alignFile 009sub.sam -fileType sam -outDir . -expTag PP_demo -thetaPrior 1000000
 
 After running the command line above, you should get a tab-delimited file with **PathoScope's** output, and an updated .sam file representing an alignment after **PathoScope's** reassignment model was applied.  
-If you want to see all the output files you should get, check out the *output_files* directory in the PS\_demo repo.
+If you want to see all the output files you should get, check out the *output_files* directory in the PP\_demo repo.
 
 ### Output TSV file format
 
@@ -115,6 +115,3 @@ This represent the percentage of reads that are mapped to the genome in Column 1
 11. **Initial low confidence hits:**  
 This represent the percentage of reads that are mapped to the genome in Column 1 with an alignment hit score of 1%-50% to this genome and before pathoscope reassignment is performed.
 
-### Ready for the next demo?
-
-Let's see an example analysis on data generated in **PathoScope** [here](https://github.com/ecastron/PS_demo/blob/master/demo02.md)
