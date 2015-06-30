@@ -63,7 +63,7 @@ If you have fasta files and not bowtie2 indices:
 
 But if you already have Bowtie2 indices (our case), you can issue the following command:
 
-		python pathoscope2.py MAP -U 009sub.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes phix174  -outDir . -outAlign 009sub.sam  -expTag PP_demo
+		python pathoscope2.py MAP -U 009sub.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign 009sub.sam  -expTag PP_demo
 
 Let's give it a try...
 
@@ -81,13 +81,30 @@ And you should have one .sam file per library, plus another file containing the 
 
 ![mapout](https://github.com/ecastron/PS_demo/raw/master/img/pp_DEMO_map_output.png)
 
+If you pay attention to the table above, you'll realize that the same number of reads that mapped against our target library also mapped against the human genome. This implies that the reads in 009sub.fastq do not belong to any of the genomes present in our database.
+Let's add some reads from *Escherichia coli* to our 009sub.fastq file. Get the *E. coli* reads from [here](https://www.dropbox.com/s/xsje9xhrjgp688z/e_coli_1000.fq?dl=0). Now from the command line we isse the following command:
+
+		cat 009sub.fastq e_coli_1000.fq > 009ec.fastq
+
+And now let's try mapping again but this time using our new fastq file:
+
+		python pathoscope2.py MAP -U 009ec.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign 009ec.sam  -expTag PP_demo2
+
+When you look at the new results, you see that now many more reads mapped against the target library:
+
+| Reads Mapped  | Library  | 
+|:------------- | ---------------:|
+| 1042      | HMP|
+| 315 | genome |
+| 0 | phix174 |
+
+
 ### Let's get a taxonomic profile from our .sam file
-The last step in our demo is to obtain a taxonomic profile from 009sub.sam using the read reassignment model implemented in **PathoID**
+The last step in our demo is to obtain a taxonomic profile from 009ec.sam using the read reassignment model implemented in **PathoID**
 
-		python pathoscope2.py ID -alignFile 009sub.sam -fileType sam -outDir . -expTag PP_demo -thetaPrior 1000000
+		python pathoscope2.py ID -alignFile 009ec.sam -fileType sam -outDir . -expTag PP_demo -thetaPrior 1000000
 
-After running the command line above, you should get a tab-delimited file with **PathoScope's** output, and an updated .sam file representing an alignment after **PathoScope's** reassignment model was applied.  
-If you want to see all the output files you should get, check out the *output_files* directory in the PP\_demo repo.
+After running the command line above, you should get a tab-delimited file with **PathoScope's** output, and an updated .sam file representing an alignment after **PathoScope's** reassignment model was applied. As expected, the top hit corresponds to *E. coli* as we artificially added reads from this bacterial species.
 
 ### Output TSV file format
 
