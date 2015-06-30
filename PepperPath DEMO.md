@@ -12,7 +12,7 @@ There are 6 **PathoScope modules**, however, for this demo we will focus on the 
 - ***PathoMap*** - Aligns reads to target reference genome library and removes sequences that align to the filter and host libraries
 - ***PathoID*** - Reassigns ambiguous reads, identifies microbial strains present in the sample, and estimates proportions of reads from each genome  
 
-Once you run your samples through **PathoScope**, you can easily import the outputfiles into R for downstream exploratory data analysis and statistical inferences.
+Once you run your samples through **PathoScope**, you can easily import the output files into R for downstream exploratory data analysis and statistical inferences.
 
 ### PathoScope Dependencies
 The only dependencies for **PathoScope** are [*Bowtie2*](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) and [python](https://www.python.org) *2.7.3* or higher. Make sure that both are in your PATH by issuing something like `echo $PATH`
