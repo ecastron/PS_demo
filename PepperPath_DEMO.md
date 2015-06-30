@@ -90,6 +90,8 @@ And now let's try mapping again but this time using our new fastq file:
 
 		python pathoscope2.py MAP -U 009ec.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign 009ec.sam  -expTag PP_demo2
 
+![mapout2](https://github.com/ecastron/PS_demo/raw/master/img/pp_demo_map2.png)
+
 When you look at the new results, you see that now many more reads mapped against the target library:
 
 | Reads Mapped  | Library  | 
