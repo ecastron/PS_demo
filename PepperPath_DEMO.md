@@ -12,7 +12,7 @@ There are 6 **PathoScope modules**, however, for this demo we will focus on the 
 - ***PathoMap*** - Aligns reads to target reference genome library and removes sequences that align to the filter and host libraries
 - ***PathoID*** - Reassigns ambiguous reads, identifies microbial strains present in the sample, and estimates proportions of reads from each genome  
 
-![mapout](https://github.com/ecastron/PS_demo/raw/master/img/ps_flow.png)
+![flow](https://github.com/ecastron/PS_demo/raw/master/img/ps_flow.png)
 
 
 Once you run your samples through **PathoScope**, you can easily import the output files into R for downstream exploratory data analysis and statistical inferences.
