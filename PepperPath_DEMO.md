@@ -3,7 +3,7 @@
 
 ![banner](https://raw.githubusercontent.com/ecastron/PS_demo/master/img/aperiomics_green_background.png)
 
-##### In this demo we will explore how to get a taxonomic profile from a metagenomic experiment using PathoScope 2.0. A more in-depth tutorial can be found in the **PathoScope** repo [here](https://github.com/PathoScope/PathoScope/raw/master/pathoscope2.0_v0.02_tutorial.pdf)
+##### In this demo we will explore how to get a taxonomic profile from a metagenomic experiment using PathoScope 2.0. A more in-depth tutorial can be found in the **PathoScope** repository [here](https://github.com/PathoScope/PathoScope/raw/master/pathoscope2.0_v0.02_tutorial.pdf)
 
 ### What PathoScope can do for you
 **PathoScope** is a modular piece of software that will allow you to go all the way from a fastq file to a text file (typically tab-delimited) with columns representing genomes, their proportions, etc.  
@@ -11,6 +11,9 @@ There are 6 **PathoScope modules**, however, for this demo we will focus on the 
 - ***PathoLib*** - Allows user to automatically generate custom reference genome libraries for specific scenarios or datasets
 - ***PathoMap*** - Aligns reads to target reference genome library and removes sequences that align to the filter and host libraries
 - ***PathoID*** - Reassigns ambiguous reads, identifies microbial strains present in the sample, and estimates proportions of reads from each genome  
+
+![mapout](https://github.com/ecastron/PS_demo/raw/master/img/ps_flow.png)
+
 
 Once you run your samples through **PathoScope**, you can easily import the output files into R for downstream exploratory data analysis and statistical inferences.
 
