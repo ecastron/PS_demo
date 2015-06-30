@@ -56,26 +56,25 @@ Once you have your data and target and filter libraries, we are ready to go ahea
 
 If you have fasta files and not bowtie2 indices:
 
-		python pathoscope.py MAP -U 009sub.fastq -targetRefFiles HMP_ref_ti_0.fa,HMP_ref_ti_1.fa -filterRefFiles human.fa,phix174.fa  -outDir . -outAlign 009sub.sam  -expTag PP_demo
+		python pathoscope2.py MAP -U 009sub.fastq -targetRefFiles HMP_ref_ti_0.fa,HMP_ref_ti_1.fa -filterRefFiles human.fa,phix174.fa  -outDir . -outAlign 009sub.sam  -expTag PP_demo
 
 But if you already have Bowtie2 indices (our case), you can issue the following command:
 
-		python pathoscope.py MAP -U 009sub.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign 009sub.sam  -expTag PP_demo
+		python pathoscope2.py MAP -U 009sub.fastq -targetIndexPrefixes HMP_ref_ti_0,HMP_ref_ti_1 -filterIndexPrefixes genome,phix174  -outDir . -outAlign 009sub.sam  -expTag PP_demo
 
 Let's give it a try...
 
-![map](https://github.com/ecastron/PS_demo/raw/master/img/pathomap.png)
+![map](https://github.com/ecastron/PS_demo/raw/master/img/pp_DEMO_pathoMap.png)
 
 So that should have taken ~3 minutes to run. Now you have a number of things that were printed to the screen as well as files that were created. The summary of the STDOUT is:
 
 | Reads Mapped  | Library  | 
 |:------------- | ---------------:|
-| 1053      | HMP\_ref\_ti\_0 |
-| 1132      | HMP\_ref\_ti\_0 |
-| 916 | genome |
+| 315      | HMP|
+| 315 | genome |
 | 0 | phix174 |
 
-And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (DAV\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (DAV\_demo-appendAlign.fq), and the file you most care about: ES_211.sam
+And you should have one .sam file per library, plus another file containing the reads mapped to all target libraries (\_demo-appendAlign.sam), a fastq file of the reads mapping to all targets (\_demo-appendAlign.fq), and the file you most care about: 009sub.sam
 
 ![mapout](https://github.com/ecastron/PS_demo/raw/master/img/mapout.png)
 
